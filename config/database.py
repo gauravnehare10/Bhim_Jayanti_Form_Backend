@@ -11,3 +11,4 @@ MONGO_URL = os.getenv("MONGO_URL")
 db_client = AsyncIOMotorClient(MONGO_URL)
 
 registrations = db_client.Bhim_Jayanti.registrations
+withdraw_registrations = db_client.Bhim_Jayanti.withdraw_registrations
