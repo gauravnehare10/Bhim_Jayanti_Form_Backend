@@ -4,9 +4,13 @@ from models.models import RequestModel
 from config.database import registrations, withdraw_registrations
 import uuid
 from datetime import datetime
+from routes import admin, admin_auth
 
 
 app = FastAPI()
+
+app.include_router(admin_auth.router)
+app.include_router(admin.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,9 +66,12 @@ async def withdraw_registration(registration_id: str):
     user = await registrations.find_one({"_id": registration_id})
     if user:
         user["Withdraw"] = "pending"
+        user["withdraw_at"] = datetime.utcnow()
         await withdraw_registrations.insert_one(user)
         await registrations.delete_one({"_id": registration_id})
     else:
         HTTPException(status_code=404, detail="Not Found")
 
     return {"message": "Withdrawal requested successful, you will get refunded within a week."}
+
+

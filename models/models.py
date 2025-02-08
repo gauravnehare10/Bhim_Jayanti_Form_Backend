@@ -20,3 +20,30 @@ class RequestModel(BaseModel):
     homeSpaceCount: Optional[int] = 0
     totalFees: float
     paymentConfirmed: bool
+
+
+class WithdrawalUpdate(BaseModel):
+    status: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    expires_in: int
+
+class TokenData(BaseModel):
+    username: str | None = None
+
+class User(BaseModel):
+    userId: object
+    username: str
+    name: str
+    email: str
+    phone: str
+
+class UserInDB(User):
+    hashed_password: str
+
+
+
+
+
