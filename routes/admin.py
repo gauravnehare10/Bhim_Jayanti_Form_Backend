@@ -39,3 +39,9 @@ async def withdraw_update(registration_id: str, update: WithdrawalUpdate, curren
         raise HTTPException(status_code=400, detail="Status update failed")
 
     return {"message": "Withdrawal status updated successfully", "id": registration_id}
+
+@router.get("/admin/counts")
+async def get_counts():
+    registrations_count = await registrations.count_documents({})
+    withdrawals_count = await withdraw_registrations.count_documents({})
+    return {"registrations": registrations_count, "withdrawals": withdrawals_count}
